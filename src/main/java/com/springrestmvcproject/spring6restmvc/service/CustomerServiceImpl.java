@@ -63,7 +63,6 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerDTO savedCustomer = CustomerDTO.builder()
                 .id(UUID.randomUUID())
                 .customerName(customer.getCustomerName())
-                .version(customer.getVersion())
                 .updatedDate(LocalDateTime.now())
                 .createdDate(LocalDateTime.now())
                 .build();
