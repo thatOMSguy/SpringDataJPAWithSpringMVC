@@ -3,7 +3,7 @@ package com.springrestmvcproject.spring6restmvc.controller;
 
 
 import com.springrestmvcproject.spring6restmvc.model.CustomerDTO;
-import com.springrestmvcproject.spring6restmvc.service.CustomerService;
+import com.springrestmvcproject.spring6restmvc.services.CustomerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -77,7 +77,7 @@ public class CustomerController {
     public CustomerDTO getCustomerById(@PathVariable("customerId") UUID customerId) {
 
         log.debug("Get Customer By Id : Inside Controller");
-        return customerService.getCustomerById(customerId);
+        return customerService.getCustomerById(customerId).orElseThrow(NotFoundException::new);
 
 
     }

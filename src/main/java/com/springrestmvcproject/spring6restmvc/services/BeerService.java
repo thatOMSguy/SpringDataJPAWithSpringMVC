@@ -1,8 +1,9 @@
-package com.springrestmvcproject.spring6restmvc.service;
+package com.springrestmvcproject.spring6restmvc.services;
 
 import com.springrestmvcproject.spring6restmvc.model.BeerDTO;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -10,7 +11,7 @@ public interface BeerService {
 
     List<BeerDTO> listBeers();
 
-    BeerDTO getBeerById(UUID id);
+    Optional<BeerDTO> getBeerById(UUID id);
 
     BeerDTO saveNewBeer(BeerDTO beer);
 

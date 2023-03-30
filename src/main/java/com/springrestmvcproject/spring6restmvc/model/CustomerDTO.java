@@ -11,9 +11,9 @@ import java.util.UUID;
 @Data
 public class CustomerDTO {
 
-    private String customerName;
     private UUID id;
     private String version;
+    private String customerName;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 

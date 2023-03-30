@@ -1,6 +1,12 @@
 package com.springrestmvcproject.spring6restmvc.repositories;
 
+import com.springrestmvcproject.spring6restmvc.entities.Beer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BeerRepository extends JpaRepository {
+import java.util.UUID;
+
+/**
+ * Created by jt, Spring Framework Guru.
+ */
+public interface BeerRepository extends JpaRepository<Beer, UUID> {
 }

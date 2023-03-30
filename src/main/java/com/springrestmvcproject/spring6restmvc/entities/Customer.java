@@ -15,19 +15,15 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer {
-
-    private String customerName;
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false, unique = true)
+    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private UUID id;
+    private String name;
 
     @Version
-    private String version;
+    private Integer version;
     private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
-
-
+    private LocalDateTime updateDate;
 }

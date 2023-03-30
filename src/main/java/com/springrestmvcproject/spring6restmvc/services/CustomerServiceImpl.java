@@ -1,4 +1,4 @@
-package com.springrestmvcproject.spring6restmvc.service;
+package com.springrestmvcproject.spring6restmvc.services;
 
 import com.springrestmvcproject.spring6restmvc.model.CustomerDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -53,8 +53,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO getCustomerById(UUID id) {
-        return customerMap.get(id);
+    public Optional<CustomerDTO> getCustomerById(UUID id) {
+        return Optional.of(customerMap.get(id));
     }
 
 

@@ -1,4 +1,4 @@
-package com.springrestmvcproject.spring6restmvc.service;
+package com.springrestmvcproject.spring6restmvc.services;
 
 import com.springrestmvcproject.spring6restmvc.model.BeerDTO;
 import com.springrestmvcproject.spring6restmvc.model.BeerStyle;
@@ -66,12 +66,12 @@ public class BeerServiceImpl implements BeerService {
 
 
     @Override
-    public BeerDTO getBeerById(UUID id) {
+    public Optional<BeerDTO> getBeerById(UUID id) {
 
 
         log.debug("Get bear by id service initiated");
 
-        return beerMap.get(id);
+        return Optional.of(beerMap.get(id));
     }
 
 

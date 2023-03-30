@@ -2,7 +2,7 @@ package com.springrestmvcproject.spring6restmvc.controller;
 
 
 import com.springrestmvcproject.spring6restmvc.model.BeerDTO;
-import com.springrestmvcproject.spring6restmvc.service.BeerService;
+import com.springrestmvcproject.spring6restmvc.services.BeerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -23,8 +23,7 @@ public class BeerController {
 
     public static final String BEER_PATH = "/api/v1/beer";
     public static final String BEER_PATH_LEADING_SLASH = "/api/v1/beer/";
-    public static final String BEER_PATH_ID = BEER_PATH+"/{beerId}";
-
+    public static final String BEER_PATH_ID = BEER_PATH + "/{beerId}";
 
 
     @PatchMapping(BEER_PATH_ID)
@@ -66,7 +65,7 @@ public class BeerController {
     }
 
 
-    @GetMapping( value =  BEER_PATH)
+    @GetMapping(value = BEER_PATH)
     public List<BeerDTO> listBeers() {
 
         return beerService.listBeers();
@@ -77,10 +76,11 @@ public class BeerController {
     public BeerDTO getBearById(@PathVariable("beerId") UUID beerId) {
 
         log.debug("Get Beer By Id : Inside Controller -1234 --aasssddfff");
-        return beerService.getBeerById(beerId);
-
+        return beerService.getBeerById(beerId).orElseThrow(NotFoundException::new);
 
     }
+
+
 
 
 }
