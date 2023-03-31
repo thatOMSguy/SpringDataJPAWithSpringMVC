@@ -1,6 +1,7 @@
 package com.springrestmvcproject.spring6restmvc.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springrestmvcproject.spring6restmvc.entities.Beer;
 import com.springrestmvcproject.spring6restmvc.model.BeerDTO;
 import com.springrestmvcproject.spring6restmvc.services.BeerService;
 import com.springrestmvcproject.spring6restmvc.services.BeerServiceImpl;
@@ -173,6 +174,20 @@ class BeerControllerTest {
     }
 
 
+    @Test
+    void testCreateBeerWithNoName() throws Exception
+    {
+
+        BeerDTO beerDTO = BeerDTO.builder().build();
+        given(beerService.saveNewBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
+
+        mockMvc.perform(post(BEER_PATH)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(beerDTO)))
+                .andExpect(status().isBadRequest());
+
+    }
 
 
 
