@@ -33,11 +33,11 @@ class BeerRepositoryTest {
         assertThat(savedBeer.getId()).isNotNull();
     }
     @Test
-    void testSaveBeerNameTooLong() {
+    void testSaveBeerNameTooLongException() {
 
         assertThrows(ConstraintViolationException.class, ()->{
 
-            Beer savedBeer = beerRepository.save(Beer.builder()
+            beerRepository.save(Beer.builder()
                     .beerName("New Beer 11111111111111111111111111111111111111111111111111111111111111111111111111111111111")
                     .beerStyle(BeerStyle.SAISON)
                     .upc("11234")

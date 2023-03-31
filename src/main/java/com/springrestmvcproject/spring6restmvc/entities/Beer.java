@@ -35,13 +35,16 @@ public class Beer {
     @Size(max = 50)
     @Column(length = 50)
     private String beerName;
+
     @NotNull
     private BeerStyle beerStyle;
 
     @NotNull
     @NotBlank
+    @Size(max = 255)
     private String upc;
     private Integer quantityOnHand;
+
     @NotNull
     private BigDecimal price;
     private LocalDateTime createdDate;
