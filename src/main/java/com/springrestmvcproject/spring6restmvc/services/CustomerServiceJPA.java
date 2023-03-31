@@ -1,6 +1,8 @@
 package com.springrestmvcproject.spring6restmvc.services;
 
+import com.springrestmvcproject.spring6restmvc.entities.Customer;
 import com.springrestmvcproject.spring6restmvc.mappers.CustomerMapper;
+import com.springrestmvcproject.spring6restmvc.model.BeerDTO;
 import com.springrestmvcproject.spring6restmvc.model.CustomerDTO;
 import com.springrestmvcproject.spring6restmvc.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 
@@ -43,12 +46,32 @@ public class CustomerServiceJPA implements CustomerService {
     }
 
     @Override
-    public void updateCustomerById(UUID customerId, CustomerDTO customer) {
+    public Optional<CustomerDTO> updateCustomerById(UUID customerId, CustomerDTO customer) {
+
+        AtomicReference<Optional<CustomerDTO>> atomicReference = new AtomicReference<>();
+
+        customerRepository.findById(customerId).ifPresentOrElse(foundCustomer -> {
+            foundCustomer.setName(customer.getCustomerName());
+            atomicReference.set(Optional.of(customerMapper
+                    .customerToCustomerDTO(customerRepository.save(foundCustomer))));
+        }, () -> {
+            atomicReference.set(Optional.empty());
+        });
+
+        return atomicReference.get();
 
     }
 
     @Override
-    public void deleteCustomerById(UUID customerId) {
+    public Boolean deleteCustomerById(UUID customerId) {
+
+        if (customerRepository.existsById(customerId)) {
+            customerRepository.deleteById(customerId);
+            return true;
+
+        }
+
+        return false;
 
     }
 

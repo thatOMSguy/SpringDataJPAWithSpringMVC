@@ -1,7 +1,6 @@
 package com.springrestmvcproject.spring6restmvc.controller;
 
 
-
 import com.springrestmvcproject.spring6restmvc.model.CustomerDTO;
 import com.springrestmvcproject.spring6restmvc.services.CustomerService;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class CustomerController {
 
     public static final String CUSTOMER_PATH = "/api/v1/customer";
     public static final String CUSTOMER_PATH_LEADING_SLASH = "/api/v1/customer/";
-    public static final String CUSTOMER_PATH_ID = CUSTOMER_PATH+"/{customerId}";
+    public static final String CUSTOMER_PATH_ID = CUSTOMER_PATH + "/{customerId}";
 
 
     private final CustomerService customerService;
@@ -39,27 +38,34 @@ public class CustomerController {
     }
 
     @DeleteMapping(CUSTOMER_PATH_ID)
-    public ResponseEntity deleteById(@PathVariable("customerId") UUID customerId){
+    public ResponseEntity deleteById(@PathVariable("customerId") UUID customerId) {
 
-        customerService.deleteCustomerById(customerId);
+        if (!customerService.deleteCustomerById(customerId)) {
+
+            throw new NotFoundException();
+        }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping(CUSTOMER_PATH_ID)
-    public ResponseEntity updateById(@PathVariable("customerId")UUID customerId, @RequestBody CustomerDTO Customer){
-        customerService.updateCustomerById(customerId, Customer);
+    public ResponseEntity updateById(@PathVariable("customerId") UUID customerId, @RequestBody CustomerDTO Customer) {
+
+        if (customerService.updateCustomerById(customerId, Customer).isEmpty()) {
+            throw new NotFoundException();
+        }
+
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
 
     }
 
     @PostMapping(CUSTOMER_PATH)
-    public ResponseEntity handlePost(@RequestBody CustomerDTO customer){
+    public ResponseEntity handlePost(@RequestBody CustomerDTO customer) {
         CustomerDTO savedCustomer = customerService.saveNewCustomer(customer);
 
-        HttpHeaders headers =new HttpHeaders();
+        HttpHeaders headers = new HttpHeaders();
         headers.add("Location",
-                CUSTOMER_PATH_LEADING_SLASH+savedCustomer.getId().toString());
+                CUSTOMER_PATH_LEADING_SLASH + savedCustomer.getId().toString());
 
         return new ResponseEntity(headers, HttpStatus.CREATED);
 
